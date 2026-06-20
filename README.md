@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/shaxzodbek-uzb/uzbek-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/shaxzodbek-uzb/uzbek-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777bb4.svg)](https://www.php.net/)
+[![PHP 8.3+](https://img.shields.io/badge/PHP-8.3%2B-777bb4.svg)](https://www.php.net/)
 [![Built with Laravel MCP](https://img.shields.io/badge/Laravel-MCP-ff2d20.svg)](https://github.com/laravel/mcp)
 
 LLMs are notoriously shaky at Uzbek — they mangle Latin ↔ Cyrillic transliteration, get the `oʻ`/`gʻ` apostrophes wrong, and can't spell out a number in Uzbek for an invoice. **Uzbek MCP** gives them deterministic, offline tools that get it right, following the official 1995 national alphabet. It also ships a small set of no-API-key Uzbekistan data tools (currency, holidays, weather).
@@ -33,7 +33,7 @@ The language tools are **offline and deterministic** (no network, no keys). The 
 
 ### Requirements
 
-- PHP **8.2+** (with the `mbstring` extension; `intl` recommended)
+- PHP **8.3+** (with the `mbstring` extension; `intl` recommended)
 - [Composer](https://getcomposer.org)
 
 ### Install
