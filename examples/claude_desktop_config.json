@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "uzbek": {
+      "command": "php",
+      "args": [
+        "/absolute/path/to/uzbek-mcp/artisan",
+        "mcp:start",
+        "uzbek"
+      ]
+    }
+  }
+}
