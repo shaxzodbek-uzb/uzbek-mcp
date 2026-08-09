@@ -2,7 +2,6 @@
 
 > The first [Model Context Protocol](https://modelcontextprotocol.io) server for the **Uzbek language** — give Claude (and any MCP client) native Uzbek text abilities, plus a few handy live Uzbekistan data feeds.
 
-[![CI](https://github.com/shaxzodbek-uzb/uzbek-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/shaxzodbek-uzb/uzbek-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PHP 8.3+](https://img.shields.io/badge/PHP-8.3%2B-777bb4.svg)](https://www.php.net/)
 [![Built with Laravel MCP](https://img.shields.io/badge/Laravel-MCP-ff2d20.svg)](https://github.com/laravel/mcp)
