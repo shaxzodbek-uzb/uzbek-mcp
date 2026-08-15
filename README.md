@@ -20,11 +20,26 @@ There is already a healthy ecosystem of Uzbek *fintech / data* MCP servers (paym
 | `normalize-text` | Fix apostrophes (`oʻ`/`gʻ` → U+02BB, tutuq belgisi → U+02BC), Unicode → NFC, collapse whitespace | `o'zbek` → `oʻzbek` |
 | `number-to-words` | Spell an integer in written Uzbek (great for sum-in-words on invoices) | `1250` → `bir ming ikki yuz ellik` |
 | `slugify` | ASCII URL slug from Uzbek text in either script | `Oʻzbekiston Respublikasi` → `ozbekiston-respublikasi` |
+| `date-to-words` | Spell an ISO date in written Uzbek (contracts, invoices) | `2026-08-15` → `ikki ming yigirma oltinchi yil oʻn beshinchi avgust` |
+| `phone-normalize` | Parse any common Uzbek phone format → E.164 + operator/region | `8 90 123-45-67` → `+998901234567` (Beeline) |
+| `stir-validate` | Check the **shape** of a taxpayer number (9 digits) | `123 456 789` → valid shape |
 | `currency-rate` | Official CBU exchange rate vs the soʻm, with optional date + amount conversion | `USD ×100` → `1 208 556 soʻm` |
 | `public-holidays` | Official Uzbek public holidays for a year (uz + en, ISO dates) | `2026` → 10 holidays |
 | `weather` | Current weather + today's forecast for an Uzbek city (Open-Meteo) | `Samarqand` → `28.8°C` |
 
 The language tools are **offline and deterministic** (no network, no keys). The data tools call public APIs ([cbu.uz](https://cbu.uz), [open-meteo.com](https://open-meteo.com)) and need **no API key**.
+
+> **`stir-validate` checks the shape, not the taxpayer.** It catches a missing digit, a stray
+> character, or a placeholder left in a form — the errors that actually happen when a number is
+> copied off an invoice. It deliberately implements **no checksum**: published descriptions of the
+> STIR check digit disagree with one another, and a wrong checksum in an invoicing path is worse
+> than none, because it rejects a real business's tax number with a confident-sounding error.
+> Whether a STIR is issued, and whose it is, can only be answered by the State Tax Committee
+> register. Never refuse a customer on this check alone.
+
+> **`phone-normalize` operator names describe the allocated range.** Uzbekistan has number
+> portability, so the operator for a prefix is who the range was issued to, not necessarily who
+> serves that subscriber today.
 
 ---
 
