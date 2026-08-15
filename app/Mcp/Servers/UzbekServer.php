@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Mcp\Servers;
 
 use App\Mcp\Tools\CurrencyRateTool;
+use App\Mcp\Tools\DateToWordsTool;
 use App\Mcp\Tools\NormalizeTextTool;
 use App\Mcp\Tools\NumberToWordsTool;
+use App\Mcp\Tools\PhoneNormalizeTool;
 use App\Mcp\Tools\PublicHolidaysTool;
 use App\Mcp\Tools\SlugifyTool;
+use App\Mcp\Tools\StirValidateTool;
 use App\Mcp\Tools\TransliterateTool;
 use App\Mcp\Tools\WeatherTool;
 use Laravel\Mcp\Server;
@@ -27,6 +30,13 @@ use Laravel\Mcp\Server\Tool;
     - normalize-text: fix apostrophes/quotes and Unicode form in Uzbek text.
     - number-to-words: spell an integer in written Uzbek (great for sum-in-words on invoices).
     - slugify: build an ASCII URL slug from Uzbek text in either script.
+    - date-to-words: spell an ISO date in written Uzbek, for contracts and official documents.
+
+    Uzbekistan format tools (offline, deterministic):
+    - phone-normalize: parse any common Uzbek phone format into E.164 plus the operator/region.
+    - stir-validate: check the SHAPE of a taxpayer number (9 digits). It cannot confirm a STIR is
+      issued or whose it is — only the State Tax Committee register can. Never refuse a customer
+      on this check alone.
 
     Uzbekistan data tools (live, no API key):
     - currency-rate: official CBU exchange rate vs the soʻm, with optional date and amount conversion.
@@ -45,6 +55,9 @@ class UzbekServer extends Server
         NormalizeTextTool::class,
         NumberToWordsTool::class,
         SlugifyTool::class,
+        DateToWordsTool::class,
+        PhoneNormalizeTool::class,
+        StirValidateTool::class,
         CurrencyRateTool::class,
         PublicHolidaysTool::class,
         WeatherTool::class,

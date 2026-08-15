@@ -6,10 +6,13 @@ namespace Tests\Feature;
 
 use App\Mcp\Servers\UzbekServer;
 use App\Mcp\Tools\CurrencyRateTool;
+use App\Mcp\Tools\DateToWordsTool;
 use App\Mcp\Tools\NormalizeTextTool;
 use App\Mcp\Tools\NumberToWordsTool;
+use App\Mcp\Tools\PhoneNormalizeTool;
 use App\Mcp\Tools\PublicHolidaysTool;
 use App\Mcp\Tools\SlugifyTool;
+use App\Mcp\Tools\StirValidateTool;
 use App\Mcp\Tools\TransliterateTool;
 use App\Mcp\Tools\WeatherTool;
 use Illuminate\Support\Facades\Http;
@@ -50,6 +53,52 @@ class UzbekMcpServerTest extends TestCase
         UzbekServer::tool(SlugifyTool::class, ['text' => "O\u{02BB}zbekiston Respublikasi"])
             ->assertOk()
             ->assertSee('ozbekiston-respublikasi');
+    }
+
+    public function test_date_to_words_tool(): void
+    {
+        UzbekServer::tool(DateToWordsTool::class, ['date' => '2026-08-15'])
+            ->assertOk()
+            ->assertName('date-to-words')
+            ->assertSee("ikki ming yigirma oltinchi yil o\u{02BB}n beshinchi avgust");
+    }
+
+    public function test_date_to_words_rejects_a_non_iso_date(): void
+    {
+        UzbekServer::tool(DateToWordsTool::class, ['date' => '15/08/2026'])
+            ->assertHasErrors();
+    }
+
+    public function test_phone_normalize_tool(): void
+    {
+        UzbekServer::tool(PhoneNormalizeTool::class, ['phone' => '8 90 123-45-67'])
+            ->assertOk()
+            ->assertName('phone-normalize')
+            ->assertSee('+998901234567')
+            ->assertSee('Beeline');
+    }
+
+    public function test_phone_normalize_rejects_a_non_uzbek_number(): void
+    {
+        UzbekServer::tool(PhoneNormalizeTool::class, ['phone' => '+1 415 555 0132'])
+            ->assertHasErrors();
+    }
+
+    public function test_stir_validate_tool(): void
+    {
+        UzbekServer::tool(StirValidateTool::class, ['stir' => '123 456 789'])
+            ->assertOk()
+            ->assertName('stir-validate')
+            ->assertSee('123 456 789');
+    }
+
+    public function test_stir_validate_reports_a_bad_shape_without_erroring(): void
+    {
+        // A wrong shape is a result, not a tool failure — the agent should be able
+        // to read the reason and tell the user what to fix.
+        UzbekServer::tool(StirValidateTool::class, ['stir' => '12345'])
+            ->assertOk()
+            ->assertSee('9 digits');
     }
 
     public function test_public_holidays_tool(): void
